@@ -1,9 +1,6 @@
 # PiBoard
 
 
-# WARNING
-### Known error: After a while of having the pi on the node server seems to shutdown (working on fixing it now)
-
 ### Simple Dashboard for the Raspberry Pi
 
 This is a simple project I made for an old Raspberry Pi 4 Model B. Sorry in advance if I get any of the information wrong, or if this doesn’t work on every version of the Raspberry Pi.
