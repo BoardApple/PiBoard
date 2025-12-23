@@ -331,5 +331,21 @@ Below are a few resources I found helpful while working on this project:
 
 ---
 
+## Known Bugs
+These should hopefully be updated in the next release however until then these are the current bugs:
+
+- After leaving it running while nothing is playing, token rotation seems to break
+- After leaving it running for a while while not playing, node server shutsdown
+
+### Fixes
+I know these are not the best solutions however they work until this is updated, sorry 
+
+Reboot the pi, this can either be done by clicking the button on the side and selecting "reboot" or by opening a terminal either on the pi or through SSH and running the reboot command
+```
+sudo reboot
+```
+
+---
+
 ## License
 Free and open source, use for whatever you want ( ദ്ദി ˙ᗜ˙ )
