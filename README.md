@@ -34,10 +34,10 @@ To begin, go to [https://developer.spotify.com/](https://developer.spotify.com/)
 Give it a name and a description, then add the following as a **Redirect URI**:
 
 ```
-http://127.0.0.1:8888/callback
+http://127.0.0.1:8888/callback/
 ```
 
-If you want to use a different redirect URI, just remember to update it later in `server.js`.
+If you want to use a different redirect URI, just remember to update it later in `config.env`.
 
 Make sure **Web API** is checked, then save the app.
 
@@ -69,10 +69,12 @@ PiBoard uses a simple environment file to keep all configuration in one place.
 
 In the project root you’ll find a file called `config.env-example`. To use it:
 
-1. Make a copy of the file  
-2. Remove `-example` from the name so it becomes `config.env`
+1. Change into the PiBoard directory
+2. Make a copy of the file  
+3. Remove `-example` from the name so it becomes `config.env`
 
 ```
+cd PiBoard
 cp config.env-example config.env
 ```
 
@@ -84,6 +86,7 @@ Open `config.env` and update the following values:
 
 - `SPOTIFY_CLIENT_ID` → Client ID from your Spotify Developer app  
 - `SPOTIFY_REDIRECT_URI` → Redirect URI (only change this if you changed it in the Spotify app settings)
+- `SPOTIFY_OVERLAY_ENABLED` → Enable or disable the small Spotify overlay on the first page (true or false)
 
 ---
 
@@ -176,7 +179,7 @@ http://127.0.0.1:8888/
 From here:
 
 * Double-tap the screen *(or click the second button at the top)* to open the Spotify page
-* Click **Connect to Spotify** and go through the authorization steps
+* Click **Connect to Spotify** or go to **/login** and go through the authorization steps
 
 Once that’s finished, start playing music on **any other device** and you’ll have a simple Spotify media controller running on your Pi.
 
@@ -188,13 +191,14 @@ If you want the server to start automatically and open the dashboard when the Pi
 
 ### Create a startup script
 
-Create a file called **`run.sh`** (you can place this anywhere — for example, on the Desktop):
+Create a file called **`run.sh`** (you can place this anywhere):
 
 ```
-nano ~/Desktop/run.sh
+nano ~/run.sh
 ```
 
-Add the following:
+Add the following:\
+*(Make sure to change `~/PiBoard` to wherever you saved it)*
 
 ```
 #!/bin/bash
@@ -202,14 +206,15 @@ Add the following:
 cd ~/PiBoard
 node server.js &
 
-sleep 15
+sleep 10
 DISPLAY=:0 firefox -kiosk http://127.0.0.1:8888
 ```
 
-Save the file and exit, then make it executable:
+Save the file and exit, then make it executable:\
+*(Make sure to change `~/run.sh` to wherever you saved the script)*
 
 ```
-chmod +x ~/Desktop/run.sh
+chmod +x ~/run.sh
 ```
 
 ---
@@ -222,8 +227,11 @@ Now create a systemd service file so this runs automatically on boot:
 sudo nano /etc/systemd/system/piboard.service
 ```
 
-Add the following:\
-*(Make sure to update pi with your username)*
+Add the following:
+
+**Make sure to update these values:**
+- `pi` - Change to your username
+- `/home/pi/run.sh` - Change to wherever you saved the script
 
 ```
 [Unit]
@@ -248,7 +256,7 @@ Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/pi/.Xauthority
 
 # Start the PiBoard launch script
-ExecStart=/home/pi/Desktop/run.sh
+ExecStart=/home/pi/run.sh
 
 # Restart the service if it crashes
 Restart=on-failure
@@ -277,42 +285,6 @@ sudo reboot
 ```
 
 Once the Pi boots, the server will start automatically and the dashboard will open in kiosk mode.
-
----
-
-## Power Button (Shutdown)
-
-I've also added an optional **power button** in the top-right corner that allows you to shut down the Raspberry Pi directly from the dashboard.
-
-Because browsers can’t shut down the system on their own, this works by sending a request to the server, which then tells the Pi to power off.
-
-### Enable shutdown support
-
-You’ll need to allow your user to run the shutdown command without being prompted for a password.
-
-Open a terminal and edit the sudoers file **carefully**:
-
-```
-sudo visudo
-```
-
-Add the following line to the bottom of the file:\
-**(Change pi to your username)**
-
-`pi ALL=(ALL) NOPASSWD: /sbin/shutdown`
-
-
-This only allows passwordless access to the shutdown command and nothing else.
-
-### Using the power button
-
-Once enabled:
-
-- A **power button** appears in the top-right of the dashboard
-- Tapping it will ask for confirmation
-- Confirming will safely shut down the Pi
-
-This is very useful for kiosk setups where you don’t have access to a keyboard or terminal.
 
 ---
 
