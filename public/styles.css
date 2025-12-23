@@ -1,0 +1,478 @@
+/* NOTE - AI was used to comment and group this file */
+/* FONTS */
+
+@font-face {
+  font-family: "Gotham";
+  src: url("assets/GothamMedium.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("assets/Gotham-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+/* GLOBAL RESET & BASE STYLES */
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: none;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: white;
+  font-family: "Gotham", sans-serif;
+  overflow: hidden;
+}
+
+
+/* TOP BAR NAVIGATION */
+
+#top-bar {
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: #111;
+  align-items: center;
+}
+
+#top-bar button {
+  width: 50px;
+  height: 40px;
+  font-size: 18px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: "Gotham", sans-serif;
+}
+
+#top-bar button.active {
+  background: #1db954;
+}
+
+
+/* PAGE SYSTEM & TRANSITIONS */
+
+#pages {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 60px);
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  transform: translateX(100%);
+  transition: transform 0.35s ease;
+}
+
+.page.active {
+  transform: translateX(0);
+}
+
+.page.left {
+  transform: translateX(-100%);
+}
+
+
+/* WEATHER PAGE */
+
+/* Weather Background */
+.weather-bg {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: brightness(0.7);
+  transition: background-image 1.5s ease-in-out;
+}
+
+/* Weather Content Layout */
+.weather-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Time Display */
+.time {
+  font-size: 96px;
+  font-weight: 700;
+}
+
+#time-ampm {
+  font-size: 0.4em;
+  margin-left: 6px;
+  opacity: 0.8;
+}
+
+/* Date Display */
+.date {
+  font-size: 32px;
+  opacity: 0.85;
+}
+
+/* Weather Info */
+.weather {
+  text-align: right;
+}
+
+.temp {
+  font-size: 72px;
+  font-weight: 700;
+}
+
+.feels {
+  font-size: 24px;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+.condition {
+  font-size: 26px;
+  opacity: 0.85;
+}
+
+
+/* SPOTIFY OVERLAY (Weather Page) */
+
+.spotify-overlay {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  width: 280px;
+  height: 80px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 1);
+  color: white;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  font-size: 0.75rem;
+}
+
+.spotify-overlay.inactive {
+  opacity: 0.8;
+}
+
+/* Spotify Overlay Background */
+.spotify-overlay-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(14px) brightness(0.6);
+  transform: scale(1.1);
+}
+
+/* Spotify Overlay Album Art */
+.spotify-overlay-art {
+  width: 56px;
+  height: 56px;
+  margin-left: 12px;
+  border-radius: 8px;
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
+}
+
+.spotify-overlay-art.spotify-placeholder {
+  background: #444;
+  box-shadow: none;
+}
+
+.spotify-overlay-art.spotify-placeholder::after {
+  content: "";
+}
+
+/* Spotify Overlay Info */
+.spotify-overlay-info {
+  z-index: 1;
+  margin-left: 12px;
+  overflow: hidden;
+}
+
+.spotify-overlay-track {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spotify-overlay-artist {
+  opacity: 0.8;
+  font-size: 0.7rem;
+}
+
+.spotify-overlay-time {
+  font-size: 0.65rem;
+  opacity: 0.7;
+}
+
+
+/* SPOTIFY PAGE */
+
+#spotify-page {
+  position: relative;
+  overflow: hidden;
+  background: black;
+}
+
+/* Spotify Page Background */
+.spotify-bg {
+  position: absolute;
+  top: -25%;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  background-position: center;
+  background-size: cover;
+  filter: blur(55px) brightness(0.45) saturate(1.2);
+  z-index: 0;
+}
+
+/* Spotify Page Content Layout */
+.spotify-content {
+  position: relative;
+  z-index: 2;
+  width: 760px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Album Art */
+#album-art {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  background: #222;
+}
+
+/* Track Info Panel */
+.spotify-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.track {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.artist {
+  font-size: 16px;
+  opacity: 0.75;
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #1db954;
+  transition: width 0.4s linear;
+}
+
+/* Playback Controls */
+.controls {
+  display: flex;
+  gap: 28px;
+  margin-top: 14px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.controls button img {
+  width: 26px;
+  height: 26px;
+  display: block;
+  filter: invert(1);
+  opacity: 0.85;
+}
+
+.controls button:hover img {
+  opacity: 1;
+}
+
+.controls button:active img {
+  transform: scale(0.9);
+}
+
+/* Control Button States */
+#like.liked img {
+  filter: invert(27%) sepia(85%) saturate(3800%) hue-rotate(340deg);
+}
+
+#repeat.active img {
+  filter: invert(48%) sepia(88%) saturate(900%) hue-rotate(85deg);
+}
+
+#vol-mute.active img {
+  filter: invert(48%) sepia(88%) saturate(900%) hue-rotate(85deg);
+  opacity: 1;
+}
+
+/* Spotify Status Text */
+.spotify-status {
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+
+/* SYSTEM PAGE */
+
+.system-card {
+  padding: 24px;
+  color: white;
+}
+
+/* System Stats Items */
+.system-item {
+  margin-bottom: 20px;
+}
+
+.system-item span {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.system-percent {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin: 4px 0 6px;
+}
+
+/* System Progress Bars */
+.bar {
+  height: 8px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.bar div {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #1db954, #1ed760);
+  transition: width 0.6s ease, background-color 0.6s ease;
+}
+
+.bar-green {
+  background: linear-gradient(90deg, #1db954, #1ed760);
+}
+
+.bar-red {
+  background: linear-gradient(90deg, #b11226, #e53935);
+}
+
+/* System Uptime */
+.system-uptime {
+  margin-top: 30px;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+
+/* SYSTEM OVERLAY (Weather Page) */
+
+.system-overlay {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.system-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+.system-row + .system-row {
+  margin-top: 6px;
+}
+
+.system-overlay .bar {
+  margin-top: 4px;
+}
+
+
+/* POWER BUTTON */
+
+#power-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  background: none;
+  border: none;
+  color: red;
+}
+
+/* REFRESH BUTTON */
+
+#refresh-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 18px;
+  background: none;
+  border: none;
+  color: #1db954;
+  cursor: pointer;
+}
+
+#refresh-btn:active {
+  transform: scale(0.9);
+}

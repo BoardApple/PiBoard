@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pi Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="top-bar">
+    <button data-page="0">1</button>
+    <button data-page="1">2</button>
+    <button data-page="2">3</button>
+    <button id="power-btn" title="Shut down">⏻</button>
+    <button id="refresh-btn" title="Refresh">↻</button>
+  </div>
+
+  <div id="pages">
+
+    <!-- Weather -->
+    <section class="page active" id="weather-page">
+      <div class="weather-bg"></div>
+      <div class="weather-overlay">
+        <div>
+          <!-- Time & Date Overlay -->
+          <div class="time">
+            <span id="time-main"></span>
+            <span id="time-ampm"></span>
+          </div>
+          <div class="date" id="date"></div>
+        </div>
+        <!-- Weather Overlay -->
+        <div class="weather">
+          <div class="temp" id="temp-main"></div>
+          <div class="feels" id="temp-feels"></div>
+          <div class="condition" id="condition"></div>
+        </div>
+        <!-- Spotify Overlay -->
+        <div class="spotify-overlay" id="spotify-overlay">
+          <div class="spotify-overlay-bg" id="spotify-overlay-bg"></div>
+          <img class="spotify-overlay-art" id="spotify-overlay-art" src="" alt="" aria-hidden="true"/>
+          <div class="spotify-overlay-info">
+            <div class="spotify-overlay-track" id="spotify-overlay-track">Not Playing</div>
+            <div class="spotify-overlay-artist" id="spotify-overlay-artist"></div>
+            <div class="spotify-overlay-time" id="spotify-overlay-time"></div>
+          </div>
+        </div>
+        <!-- System Info Overlay -->
+        <div class="system-overlay" id="system-overlay">
+          <div class="system-row">
+            <span>CPU</span>
+            <span id="overlay-cpu">0%</span>
+          </div>
+          <div class="bar overlay-bar">
+            <div id="overlay-cpu-bar"></div>
+          </div>
+
+          <div class="system-row">
+            <span>RAM</span>
+            <span id="overlay-ram">0%</span>
+          </div>
+          <div class="bar overlay-bar">
+            <div id="overlay-ram-bar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spotify Page -->
+    <section class="page" id="spotify-page">
+
+      <!-- Background Album Art -->
+      <div class="spotify-bg"></div>
+
+      <!-- Foreground Content (Buttons etc..) -->
+      <div class="spotify-content">
+
+        <!-- Foreground Album Art -->
+        <img id="album-art" />
+
+        <div class="spotify-info">
+          <div class="track" id="track-name">Not Playing</div>
+          <div class="artist" id="artist-name"></div>
+
+          <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+          </div>
+
+          <div class="controls">
+            <button id="like" title="Like"><img src="/assets/icons/heart-fill.svg" alt="Like"></button>
+            <button id="prev" title="Previous"><img src="/assets/icons/skip-backward-fill.svg" alt="Previous"></button>
+            <button id="play" title="Play / Pause"><img src="/assets/icons/play-fill.svg" alt="Play"></button>
+            <button id="next" title="Next"><img src="/assets/icons/skip-forward-fill.svg" alt="Next"></button>
+            <button id="repeat" title="Repeat"><img src="/assets/icons/repeat.svg" alt="Repeat"></button>
+            <button id="vol-mute"><img src="/assets/icons/volume-mute-fill.svg" alt="Volume"></button>
+          </div>
+
+          <div class="spotify-status" id="spotify-status"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- System Info Page -->
+    <section class="page" id="system-page">
+      <div class="system-card">
+
+        <div class="system-item">
+          <span>CPU Usage</span>
+          <div class="system-percent" id="cpu-percent"></div>
+          <div class="bar">
+            <div id="cpu-bar"></div>
+          </div>
+        </div>
+
+        <div class="system-item">
+          <span>Memory</span>
+          <div class="system-percent" id="ram-percent"></div>
+          <div class="bar">
+            <div id="ram-bar"></div>
+          </div>
+        </div>
+
+        <div class="system-item system-uptime">
+          <span id="uptime"></span>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="spotify.js"></script>
+</body>
+</html>
